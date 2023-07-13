@@ -25,61 +25,80 @@
 
     <!--! Bottom Section  -->
     <div class="container">
-      <div class="row">
-        <div class="col-8"></div>
-        <!-- !buttons  -->
-        <div
-          id="buttonSection"
-          class="col-4 d-flex flex-column d-block mt-5 pt-5"
-        >
-          <button class="btns" id="generateBtn">Generate Users List</button>
-          <button class="btns" id="addUser">Add User</button>
-          <button class="btns" id="deleteUser">Delete User</button>
-          <button class="btns" id="login">Login</button>
+      <div class="float-start board">
+        <div class="row">
+          <div class="col text-center">
+            <h2>#</h2>
+            <h3 id="indexData"></h3>
+          </div>
+          <div class="col">
+            <h2>Name</h2>
+            <h3 id="nameData"></h3>
+          </div>
+          <div class="col text-center">
+            <h2>Age</h2>
+            <h3 id="ageData"></h3>
+          </div>
+          <div class="col text-center">
+            <h2>Email</h2>
+            <h3 id="emailData"></h3>
+          </div>
+          <div class="col text-center">
+            <h2>Education</h2>
+            <h3 id="eduData"></h3>
+          </div>
+          <div class="col text-center">
+            <h2>Target Id</h2>
+            <h3 id="digitData"></h3>
+          </div>
         </div>
-        <!--! input Section  -->
-        <div
-          id="inputSection"
-          class="col-4 flex-column text-center d-none mt-5 pt-5"
-        >
-          <input
-            type="text"
-            class="input"
-            placeholder="Name"
-            id="userName"
-            required
-          />
-          <input
-            type="text"
-            class="input"
-            placeholder="Age"
-            id="age"
-            required
-          />
-          <input
-            type="email"
-            class="input"
-            placeholder="Email"
-            id="email"
-            required
-          />
-          <input
-            type="text"
-            class="input"
-            placeholder="Education"
-            id="education"
-            required
-          />
-          <input
-            type="text"
-            class="input"
-            placeholder="4 digit id"
-            id="digit"
-            maxlength="4"
-            required
-          />
-          <button class="btns" id="Save">Save User</button>
-        </div>
+      </div>
+      <!-- !buttons  -->
+      <div
+        id="buttonSection"
+        class="d-flex flex-column d-block mt-5 pt-5 float-end"
+      >
+        <button class="btns" id="generateBtn">Generate Users List</button>
+        <button class="btns" id="addUser">Add User</button>
+        <button class="btns" id="deleteUser">Delete User</button>
+        <button class="btns" id="login">Login</button>
+      </div>
+      <!--! input Section  -->
+      <div
+        id="inputSection"
+        class="flex-column text-center d-none mt-5 pt-5 float-end"
+      >
+        <input
+          type="text"
+          class="input"
+          placeholder="Name"
+          id="userName"
+          required
+        />
+        <input type="text" class="input" placeholder="Age" id="age" required />
+        <input
+          type="email"
+          class="input"
+          placeholder="Email"
+          id="email"
+          required
+        />
+        <input
+          type="text"
+          class="input"
+          placeholder="Education"
+          id="education"
+          required
+        />
+        <input
+          type="text"
+          class="input"
+          placeholder="4 digit id"
+          id="digit"
+          maxlength="4"
+          required
+        />
+        <button class="btns" id="Save">Save User</button>
       </div>
     </div>
     <!-- Option 1: Bootstrap Bundle with Popper -->

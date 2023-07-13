@@ -10,10 +10,10 @@ html {
 }
 /* Buttons  */
 body {
-  background-color: #008080;
+  /* background-color: #008080; */
 }
 .btns {
-  background-color: white;
+  background-color: gray;
   font-size: 2rem;
   margin: 1rem;
   padding: 1.8rem 1.8rem;
@@ -29,7 +29,6 @@ body {
 /* input group  */
 .input {
   font-family: "Poppins", sans-serif;
-  width: 100%;
   margin: 1rem;
   font-size: 1.6rem;
   padding: 1.4rem 1rem;
@@ -40,4 +39,25 @@ body {
 }
 .input:focus {
   border: 2px solid palegreen;
+}
+
+#buttonSection {
+  width: 25%;
+}
+#inputSection {
+  width: 25%;
+}
+/* Data board  */
+.board {
+  border-radius: 2rem;
+  width: 70%;
+  margin-top: 10rem;
+}
+h2 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+}
+h3 {
+  margin: 3rem 0;
+  font-family: "Poppins", sans-serif;
 }
