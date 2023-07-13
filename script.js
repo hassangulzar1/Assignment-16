@@ -1,5 +1,5 @@
 let personData = [];
-// Change to input pannel
+// !Change to input pannel
 addUser.addEventListener("click", function () {
   if (buttonSection.classList.contains("d-block")) {
     buttonSection.classList.add("d-none");
@@ -11,13 +11,42 @@ addUser.addEventListener("click", function () {
   }
 });
 
-// Generate User List Logic
-generateBtn.addEventListener("click", function () {
-  if (localStorage.length === 0) {
-    alert("Please Enter Users");
+//! Delete the User
+deleteUser.addEventListener("click", function () {
+  let targetId = prompt("Enter Target Id");
+  let data = JSON.parse(localStorage.getItem("data"));
+  let deleteIndex = 0;
+  data.forEach((e, i) => {
+    if (e.digit === targetId) {
+      deleteIndex = i;
+    }
+  });
+  if (deleteIndex >= 0) {
+    data.splice(deleteIndex, 1);
+    localStorage.setItem("data", JSON.stringify(data));
+    //! hide Users
+    indexData.innerText = "";
+    nameData.innerText = "";
+    ageData.innerText = "";
+    emailData.innerText = "";
+    eduData.innerText = "";
+    digitData.innerText = "";
+    alert("User Deleted Successfully (-_-)");
   } else {
-    let data = JSON.parse(localStorage.getItem("data"));
-    data.forEach((e, i) => {
+    alert("Please Enter Valid Id");
+  }
+});
+
+//! Generate User List Logic
+generateBtn.addEventListener("click", function () {
+  let givenData = JSON.parse(localStorage.getItem("data"));
+  if (givenData.length < 1) {
+    alert("Nothing to Display Please Add User!!");
+  } else if (indexData.innerText.length > 0) {
+    return alert("Already Generated!!");
+  } else {
+    //! Add data in form
+    givenData.forEach((e, i) => {
       let { name, age, email, education, digit } = e;
       let forIndex = document.createElement("h3");
       forIndex.innerText = `${i + 1} :-`;
@@ -46,12 +75,19 @@ generateBtn.addEventListener("click", function () {
   }
 });
 
-// Save Date from Inputs
+// !Save Date from Inputs
 Save.addEventListener("click", function (e) {
-  // Cheack if any input is empty or not
+  // !Cheack if any input is empty or not
+  let names = [];
+  let emails = [];
+  let data = JSON.parse(localStorage.getItem("data"));
+  data.forEach((e) => {
+    names.push(e.name);
+    emails.push(e.email);
+  });
   if (
     userName.value == "" ||
-    userName.value == "" ||
+    age.value == "" ||
     email.value == "" ||
     education.value == "" ||
     digit.value == ""
@@ -63,6 +99,10 @@ Save.addEventListener("click", function (e) {
     alert("Digit value must be a 4 digit number");
   } else if (!age.value.match(/[1234567890]/g)) {
     alert("age must be a numbers");
+  } else if (names.includes(userName.value)) {
+    alert("UserName already exists");
+  } else if (emails.includes(email.value)) {
+    alert("UserEmail already exists");
   } else {
     let data = {
       name: userName.value,
@@ -80,7 +120,16 @@ Save.addEventListener("click", function (e) {
     inputs.forEach((e) => {
       e.value = "";
     });
-    // Change inputs
+
+    // !clear Display Data
+    indexData.innerText = "";
+    nameData.innerText = "";
+    ageData.innerText = "";
+    emailData.innerText = "";
+    eduData.innerText = "";
+    digitData.innerText = "";
+
+    //! Change inputs
     buttonSection.classList.add("d-block");
     buttonSection.classList.remove("d-none");
     inputSection.classList.remove("d-block");
@@ -88,6 +137,56 @@ Save.addEventListener("click", function (e) {
   }
 });
 
-// data.forEach((e, i) => {
-//   let { name, age, education, digit, email } = e;
-// });
+// Login Logic
+login.addEventListener("click", function () {
+  login_input.classList.remove("d-none");
+  login_input.classList.add("d-block");
+  buttonSection.classList.add("d-none");
+  buttonSection.classList.remove("d-block");
+
+  loginForm.addEventListener("click", function () {
+    let data = JSON.parse(localStorage.getItem("data"));
+    let userLogin = loginUsername.value;
+    let emailLogin = loginEmail.value;
+    if (data.length === 0) {
+      login_input.classList.remove("d-block");
+      login_input.classList.add("d-none");
+      buttonSection.classList.add("d-block");
+      buttonSection.classList.remove("d-none");
+      return alert("NO user Available Add User's");
+    }
+    let namesArr = [];
+    let emailsArr = [];
+    data.forEach((e) => {
+      namesArr.push(e.name);
+      emailsArr.push(e.email);
+    });
+    if (namesArr.indexOf(userLogin) == emailsArr.indexOf(emailLogin)) {
+      alert(`${userLogin} is Logged in`);
+      loginUsername.value = "";
+      loginEmail.value = "";
+      ifLogin.innerText = `Welcome ${userLogin}`;
+      buttonSection.classList.add("d-block");
+      buttonSection.classList.remove("d-none");
+      login_input.classList.remove("d-block");
+      login_input.classList.add("d-none");
+      login.classList.add("d-none");
+      logout.classList.add("d-block");
+      logout.classList.remove("d-none");
+    } else {
+      alert("enter valid Name or email");
+    }
+  });
+});
+
+// logout logic
+logout.addEventListener("click", function () {
+  let confirmfromUser = confirm("Are you sure you want to logOut?");
+  if (confirmfromUser) {
+    ifLogin.innerText = "";
+    login.classList.add("d-block");
+    login.classList.remove("d-none");
+    logout.classList.add("d-none");
+    logout.classList.remove("d-block");
+  }
+});

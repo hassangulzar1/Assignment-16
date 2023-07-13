@@ -26,6 +26,14 @@ body {
   transition: 0.3s ease;
 }
 
+/* Navbar  */
+.navSec img {
+  width: 4.4rem;
+}
+.navSec h1 {
+  color: green;
+}
+
 /* input group  */
 .input {
   font-family: "Poppins", sans-serif;
@@ -47,11 +55,22 @@ body {
 #inputSection {
   width: 25%;
 }
+#login_input {
+  width: 25%;
+}
+#signOut {
+  width: 25%;
+}
 /* Data board  */
 .board {
   border-radius: 2rem;
   width: 70%;
-  margin-top: 10rem;
+}
+h1 {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-size: 3.4rem;
+  margin: 2rem 0;
 }
 h2 {
   font-family: "Poppins", sans-serif;
