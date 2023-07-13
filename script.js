@@ -80,10 +80,12 @@ Save.addEventListener("click", function (e) {
   // !Cheack if any input is empty or not
   let names = [];
   let emails = [];
+  let digits = [];
   let data = JSON.parse(localStorage.getItem("data"));
   data.forEach((e) => {
     names.push(e.name);
     emails.push(e.email);
+    digits.push(e.digit);
   });
   if (
     userName.value == "" ||
@@ -105,6 +107,8 @@ Save.addEventListener("click", function (e) {
     alert("UserEmail already exists");
   } else if (age.value < 1) {
     alert("UserAge must be between 1 and 100");
+  } else if (digits.includes(digit.value)) {
+    alert("Id already exists");
   } else {
     let data = {
       name: userName.value,
