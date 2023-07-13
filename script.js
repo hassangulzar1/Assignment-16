@@ -103,6 +103,8 @@ Save.addEventListener("click", function (e) {
     alert("UserName already exists");
   } else if (emails.includes(email.value)) {
     alert("UserEmail already exists");
+  } else if (age.value < 1) {
+    alert("UserAge must be between 1 and 100");
   } else {
     let data = {
       name: userName.value,
