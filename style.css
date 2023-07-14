@@ -10,10 +10,10 @@ html {
 }
 /* Buttons  */
 body {
-  /* background-color: #008080; */
+  background-color: whitesmoke;
 }
 .btns {
-  background-color: gray;
+  background-color: white;
   font-size: 2rem;
   margin: 1rem;
   padding: 1.8rem 1.8rem;
@@ -64,7 +64,9 @@ body {
 /* Data board  */
 .board {
   border-radius: 2rem;
+  margin-top: 5rem;
   width: 70%;
+  background-color: white;
 }
 h1 {
   font-family: "Roboto", sans-serif;

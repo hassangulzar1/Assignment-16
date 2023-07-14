@@ -1,4 +1,3 @@
-let personData = [];
 // !Change to input pannel
 addUser.addEventListener("click", function () {
   if (buttonSection.classList.contains("d-block")) {
@@ -16,6 +15,8 @@ deleteUser.addEventListener("click", function () {
   let targetId = prompt("Enter Target Id");
   let data = JSON.parse(localStorage.getItem("data"));
   let deleteIndex = 0;
+  if (targetId == "") return false;
+
   data.forEach((e, i) => {
     if (e.digit === targetId) {
       deleteIndex = i;
@@ -109,6 +110,8 @@ Save.addEventListener("click", function (e) {
     alert("UserAge must be between 1 and 100");
   } else if (digits.includes(digit.value)) {
     alert("Id already exists");
+  } else if (digit.value.length < 4) {
+    alert("Id must be 4 digits");
   } else {
     let data = {
       name: userName.value,
