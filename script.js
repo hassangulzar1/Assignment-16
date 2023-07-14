@@ -1,4 +1,5 @@
 // !Change to input pannel
+let personData = [];
 addUser.addEventListener("click", function () {
   if (buttonSection.classList.contains("d-block")) {
     buttonSection.classList.add("d-none");
@@ -40,7 +41,12 @@ deleteUser.addEventListener("click", function () {
 
 //! Generate User List Logic
 generateBtn.addEventListener("click", function () {
+  if (localStorage.length === 0) {
+    localStorage.setItem("data", JSON.stringify(personData));
+  }
+
   let givenData = JSON.parse(localStorage.getItem("data"));
+
   if (givenData.length < 1) {
     alert("Nothing to Display Please Add User!!");
   } else if (indexData.innerText.length > 0) {

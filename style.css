@@ -10,20 +10,24 @@ html {
 }
 /* Buttons  */
 body {
-  background-color: whitesmoke;
+  background-color: #01ca9c;
 }
 .btns {
-  background-color: white;
+  background-color: transparent;
+  border: 2px solid #ffffff;
+  text-transform: uppercase;
   font-size: 2rem;
   margin: 1rem;
   padding: 1.8rem 1.8rem;
   font-family: "Poppins", sans-serif;
   font-weight: 500;
-  border: none;
+  color: #ffffff;
+  border-radius: 1rem;
 }
 .btns:hover {
-  box-shadow: 1.2rem 1.2rem #d9a420;
-  transition: 0.3s ease;
+  background-color: #ffffff;
+  color: #01ca9c;
+  transition: 0.5s ease;
 }
 
 /* Navbar  */
