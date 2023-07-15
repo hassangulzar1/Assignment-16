@@ -6,7 +6,7 @@
   padding: 0;
 }
 html {
-  font-size: 62.5%;
+  font-size: 100%;
 }
 /* Buttons  */
 body {
@@ -27,6 +27,24 @@ body {
 .btns:hover {
   background-color: #ffffff;
   color: #01ca9c;
+  transition: 0.5s ease;
+}
+
+.btnslogout {
+  background-color: transparent;
+  border: 2px solid #ffffff;
+  text-transform: uppercase;
+  font-size: 2rem;
+  margin: 1rem;
+  padding: 1.8rem 1.8rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  color: #ffffff;
+  border-radius: 1rem;
+}
+.btnslogout:hover {
+  background-color: red;
+  color: #ffffff;
   transition: 0.5s ease;
 }
 
@@ -71,6 +89,7 @@ body {
   margin-top: 5rem;
   width: 70%;
   background-color: white;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 h1 {
   font-family: "Roboto", sans-serif;
