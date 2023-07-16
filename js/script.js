@@ -1,5 +1,5 @@
 const notifications = document.querySelector(".notifications");
-// Removing Toast
+// !Removing Toast
 const removeToast = (toast) => {
   toast.classList.add("hide");
   if (toast.timeoutId) clearTimeout(toast.timeoutId);
@@ -22,7 +22,19 @@ addUser.addEventListener("click", function () {
 //! Delete the User
 deleteUser.addEventListener("click", function () {
   let data = JSON.parse(localStorage.getItem("data"));
-  if (data.length == 0) return alert("there is no User Available");
+  if (data.length == 0) {
+    return (() => {
+      const toast = document.createElement("li");
+      toast.className = `toast1 warning`;
+      toast.innerHTML = `<div class="column">
+                         <i class="fa-solid fa-triangle-exclamation"></i>
+                         <span>No User's Available: Add User's</span>
+                      </div>
+                      <i class="fa-solid fa-xmark" onclick="removeToast(this.parentElement)"></i>`;
+      notifications.appendChild(toast);
+      toast.timeoutId = setTimeout(() => removeToast(toast), 5000);
+    })();
+  }
 
   let targetId = prompt("Enter Target Id");
   let deleteIndex = 0;
