@@ -41,16 +41,24 @@ addUser.addEventListener("click", function () {
 
 //! Delete the User
 deleteUser.addEventListener("click", function () {
-  let targetId = prompt("Enter Target Id");
   let data = JSON.parse(localStorage.getItem("data"));
-  let deleteIndex = 0;
-  if (targetId == "") return false;
+  if (data.length == 0) return alert("there is no User Available");
 
+  let targetId = prompt("Enter Target Id");
+  let deleteIndex = 0;
+  if (targetId == "" || targetId == undefined) return false;
+  let names = [];
+  let deletedName = "";
   data.forEach((e, i) => {
+    names.push(e.name);
     if (e.digit === targetId) {
       deleteIndex = i;
+    } else {
+      deleteIndex = -1;
     }
   });
+
+  deletedName = names[deleteIndex];
   if (deleteIndex >= 0) {
     data.splice(deleteIndex, 1);
     localStorage.setItem("data", JSON.stringify(data));
@@ -61,7 +69,17 @@ deleteUser.addEventListener("click", function () {
     emailData.innerText = "";
     eduData.innerText = "";
     digitData.innerText = "";
-    alert("User Deleted Successfully (-_-)");
+    (() => {
+      const toast = document.createElement("li");
+      toast.className = `toast1 error`;
+      toast.innerHTML = `<div class="column">
+                         <i class="fa-solid fa-circle-xmark"></i>
+                         <span>User: "${deletedName}" Deleted Successfully</span>
+                      </div>
+                      <i class="fa-solid fa-xmark" onclick="removeToast(this.parentElement)"></i>`;
+      notifications.appendChild(toast);
+      toast.timeoutId = setTimeout(() => removeToast(toast), 5000);
+    })();
   } else {
     alert("Please Enter Valid Id");
   }
@@ -76,7 +94,17 @@ generateBtn.addEventListener("click", function () {
   let givenData = JSON.parse(localStorage.getItem("data"));
 
   if (givenData.length < 1) {
-    alert("Nothing to Display Please Add User!!");
+    (() => {
+      const toast = document.createElement("li");
+      toast.className = `toast1 error`;
+      toast.innerHTML = `<div class="column">
+                         <i class="fa-solid fa-circle-xmark"></i>
+                         <span>Nothing Available: Add Users.</span>
+                      </div>
+                      <i class="fa-solid fa-xmark" onclick="removeToast(this.parentElement)"></i>`;
+      notifications.appendChild(toast);
+      toast.timeoutId = setTimeout(() => removeToast(toast), 5000);
+    })();
   } else if (indexData.innerText.length > 0) {
     (() => {
       const toast = document.createElement("li");
