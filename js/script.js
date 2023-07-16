@@ -1,23 +1,3 @@
-//! Object containing details for different types of toasts
-// const toastDetails = {
-//   timer: 5000,
-//   success: {
-//     icon: "fa-circle-check",
-//     text: "Congradulations: User Added",
-//   },
-//   error: {
-//     icon: "fa-circle-xmark",
-//     text: "Error: This is an error toast.",
-//   },
-//   warning: {
-//     icon: "fa-triangle-exclamation",
-//     text: "Warning: This is a warning toast.",
-//   },
-//   info: {
-//     icon: "fa-circle-info",
-//     text: "Info: This is an information toast.",
-//   },
-// };
 const notifications = document.querySelector(".notifications");
 // Removing Toast
 const removeToast = (toast) => {
@@ -71,9 +51,9 @@ deleteUser.addEventListener("click", function () {
     digitData.innerText = "";
     (() => {
       const toast = document.createElement("li");
-      toast.className = `toast1 error`;
+      toast.className = `toast1 warning`;
       toast.innerHTML = `<div class="column">
-                         <i class="fa-solid fa-circle-xmark"></i>
+                         <i class="fa-solid fa-triangle-exclamation"></i>
                          <span>User: "${deletedName}" Deleted Successfully</span>
                       </div>
                       <i class="fa-solid fa-xmark" onclick="removeToast(this.parentElement)"></i>`;
@@ -81,7 +61,17 @@ deleteUser.addEventListener("click", function () {
       toast.timeoutId = setTimeout(() => removeToast(toast), 5000);
     })();
   } else {
-    alert("Please Enter Valid Id");
+    (() => {
+      const toast = document.createElement("li");
+      toast.className = `toast1 error`;
+      toast.innerHTML = `<div class="column">
+                         <i class="fa-solid fa-circle-xmark"></i>
+                         <span>Please Enter Correct ID</span>
+                      </div>
+                      <i class="fa-solid fa-xmark" onclick="removeToast(this.parentElement)"></i>`;
+      notifications.appendChild(toast);
+      toast.timeoutId = setTimeout(() => removeToast(toast), 5000);
+    })();
   }
 });
 
@@ -242,12 +232,35 @@ login.addEventListener("click", function () {
     let data = JSON.parse(localStorage.getItem("data"));
     let userLogin = loginUsername.value;
     let emailLogin = loginEmail.value;
+
     if (data.length === 0) {
       login_input.classList.remove("d-block");
       login_input.classList.add("d-none");
       buttonSection.classList.add("d-block");
       buttonSection.classList.remove("d-none");
-      return alert("NO user Available Add User's");
+      return (() => {
+        const toast = document.createElement("li");
+        toast.className = `toast1 error`;
+        toast.innerHTML = `<div class="column">
+                           <i class="fa-solid fa-circle-xmark"></i>
+                           <span>No User's Available</span>
+                        </div>
+                        <i class="fa-solid fa-xmark" onclick="removeToast(this.parentElement)"></i>`;
+        notifications.appendChild(toast);
+        toast.timeoutId = setTimeout(() => removeToast(toast), 5000);
+      })();
+    } else if (userLogin == "" || emailLogin == "") {
+      return (() => {
+        const toast = document.createElement("li");
+        toast.className = `toast1 info`;
+        toast.innerHTML = `<div class="column">
+                           <i class="fa-solid fa-circle-info"></i>
+                           <span>Please Enter Full Details</span>
+                        </div>
+                        <i class="fa-solid fa-xmark" onclick="removeToast(this.parentElement)"></i>`;
+        notifications.appendChild(toast);
+        toast.timeoutId = setTimeout(() => removeToast(toast), 5000);
+      })();
     }
     let namesArr = [];
     let emailsArr = [];
@@ -255,8 +268,22 @@ login.addEventListener("click", function () {
       namesArr.push(e.name);
       emailsArr.push(e.email);
     });
-    if (namesArr.indexOf(userLogin) == emailsArr.indexOf(emailLogin)) {
-      alert(`${userLogin} is Logged in`);
+    if (
+      namesArr.includes(userLogin) &&
+      emailsArr.includes(emailLogin) &&
+      namesArr.indexOf(userLogin) == emailsArr.indexOf(emailLogin)
+    ) {
+      (() => {
+        const toast = document.createElement("li");
+        toast.className = `toast1 success`;
+        toast.innerHTML = `<div class="column">
+                           <i class="fa-solid fa-circle-check"></i>
+                           <span>User: ${userLogin} is Logged in</span>
+                        </div>
+                        <i class="fa-solid fa-xmark" onclick="removeToast(this.parentElement)"></i>`;
+        notifications.appendChild(toast);
+        toast.timeoutId = setTimeout(() => removeToast(toast), 5000);
+      })();
       loginUsername.value = "";
       loginEmail.value = "";
       ifLogin.innerText = `Welcome ${userLogin}`;
@@ -268,7 +295,17 @@ login.addEventListener("click", function () {
       logout.classList.add("d-block");
       logout.classList.remove("d-none");
     } else {
-      alert("enter valid Name or email");
+      return (() => {
+        const toast = document.createElement("li");
+        toast.className = `toast1 error`;
+        toast.innerHTML = `<div class="column">
+                           <i class="fa-solid fa-circle-xmark"></i>
+                           <span>Wrong Name & Email</span>
+                        </div>
+                        <i class="fa-solid fa-xmark" onclick="removeToast(this.parentElement)"></i>`;
+        notifications.appendChild(toast);
+        toast.timeoutId = setTimeout(() => removeToast(toast), 5000);
+      })();
     }
   });
 });
@@ -282,5 +319,16 @@ logout.addEventListener("click", function () {
     login.classList.remove("d-none");
     logout.classList.add("d-none");
     logout.classList.remove("d-block");
+    (() => {
+      const toast = document.createElement("li");
+      toast.className = `toast1 warning`;
+      toast.innerHTML = `<div class="column">
+                         <i class="fa-solid fa-triangle-exclamation"></i>
+                         <span>You Have been Logged out</span>
+                      </div>
+                      <i class="fa-solid fa-xmark" onclick="removeToast(this.parentElement)"></i>`;
+      notifications.appendChild(toast);
+      toast.timeoutId = setTimeout(() => removeToast(toast), 5000);
+    })();
   }
 });
