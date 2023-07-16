@@ -37,22 +37,17 @@ deleteUser.addEventListener("click", function () {
   }
 
   let targetId = prompt("Enter Target Id");
-  let deleteIndex = 0;
   if (targetId == "" || targetId == undefined) return false;
   let names = [];
+  let digits = [];
   let deletedName = "";
-  data.forEach((e, i) => {
+  data.forEach((e) => {
     names.push(e.name);
-    if (e.digit === targetId) {
-      deleteIndex = i;
-    } else {
-      deleteIndex = -1;
-    }
+    digits.push(e.digit);
   });
-
-  deletedName = names[deleteIndex];
-  if (deleteIndex >= 0) {
-    data.splice(deleteIndex, 1);
+  deletedName = names[digits.indexOf(targetId)];
+  if (digits.includes(targetId)) {
+    data.splice(digits.indexOf(targetId), 1);
     localStorage.setItem("data", JSON.stringify(data));
     //! hide Users
     indexData.innerText = "";
