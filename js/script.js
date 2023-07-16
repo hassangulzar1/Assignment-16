@@ -257,7 +257,7 @@ login.addEventListener("click", function () {
         toast.timeoutId = setTimeout(() => removeToast(toast), 5000);
       })();
     } else if (userLogin == "" || emailLogin == "") {
-      return (() => {
+      (() => {
         const toast = document.createElement("li");
         toast.className = `toast1 info`;
         toast.innerHTML = `<div class="column">
