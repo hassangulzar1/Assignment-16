@@ -1,3 +1,31 @@
+//! Object containing details for different types of toasts
+// const toastDetails = {
+//   timer: 5000,
+//   success: {
+//     icon: "fa-circle-check",
+//     text: "Congradulations: User Added",
+//   },
+//   error: {
+//     icon: "fa-circle-xmark",
+//     text: "Error: This is an error toast.",
+//   },
+//   warning: {
+//     icon: "fa-triangle-exclamation",
+//     text: "Warning: This is a warning toast.",
+//   },
+//   info: {
+//     icon: "fa-circle-info",
+//     text: "Info: This is an information toast.",
+//   },
+// };
+const notifications = document.querySelector(".notifications");
+// Removing Toast
+const removeToast = (toast) => {
+  toast.classList.add("hide");
+  if (toast.timeoutId) clearTimeout(toast.timeoutId);
+  setTimeout(() => toast.remove(), 500);
+};
+
 // !Change to input pannel
 let personData = [];
 addUser.addEventListener("click", function () {
@@ -50,7 +78,17 @@ generateBtn.addEventListener("click", function () {
   if (givenData.length < 1) {
     alert("Nothing to Display Please Add User!!");
   } else if (indexData.innerText.length > 0) {
-    return alert("Already Generated!!");
+    (() => {
+      const toast = document.createElement("li");
+      toast.className = `toast1 info`;
+      toast.innerHTML = `<div class="column">
+                         <i class="fa-solid fa-circle-info"></i>
+                         <span>Attention:  Already Generated!!</span>
+                      </div>
+                      <i class="fa-solid fa-xmark" onclick="removeToast(this.parentElement)"></i>`;
+      notifications.appendChild(toast);
+      toast.timeoutId = setTimeout(() => removeToast(toast), 5000);
+    })();
   } else {
     //! Add data in form
     givenData.forEach((e, i) => {
@@ -149,6 +187,19 @@ Save.addEventListener("click", function (e) {
     buttonSection.classList.remove("d-none");
     inputSection.classList.remove("d-block");
     inputSection.classList.add("d-none");
+
+    // Show Toast
+    (() => {
+      const toast = document.createElement("li");
+      toast.className = `toast1 success`;
+      toast.innerHTML = `<div class="column">
+                         <i class="fa-solid fa-circle-check"></i>
+                         <span>Congradulations: User Added</span>
+                      </div>
+                      <i class="fa-solid fa-xmark" onclick="removeToast(this.parentElement)"></i>`;
+      notifications.appendChild(toast);
+      toast.timeoutId = setTimeout(() => removeToast(toast), 5000);
+    })();
   }
 });
 
