@@ -5,15 +5,29 @@ const removeToast = (toast) => {
   if (toast.timeoutId) clearTimeout(toast.timeoutId);
   setTimeout(() => toast.remove(), 500);
 };
-
+// !Show toast
+let showNotification = (message, type) => {
+  const toast = document.createElement("li");
+  toast.className = `toast1 ${type}`;
+  toast.innerHTML = `<div class="column">
+                      <i class="fa-solid fa-circle-${
+                        type === "error"
+                          ? "xmark"
+                          : type === "info"
+                          ? "info"
+                          : "check"
+                      }"></i>
+                      <span>${message}</span>
+                    </div>
+                    <i class="fa-solid fa-xmark" onclick="removeToast(this.parentElement)"></i>`;
+  notifications.appendChild(toast);
+  toast.timeoutId = setTimeout(() => removeToast(toast), 5000);
+};
 // !Change to input pannel
 let personData = [];
 addUser.addEventListener("click", function () {
-  if (buttonSection.classList.contains("d-block")) {
-    buttonSection.classList.add("d-none");
-    inputSection.classList.remove("d-none");
-    inputSection.classList.add("d-block");
-  }
+  buttonSection.classList.toggle("d-none");
+  inputSection.classList.toggle("d-none");
   if (localStorage.length === 0) {
     localStorage.setItem("data", JSON.stringify(personData));
   }
@@ -23,17 +37,7 @@ addUser.addEventListener("click", function () {
 deleteUser.addEventListener("click", function () {
   let data = JSON.parse(localStorage.getItem("data"));
   if (data.length == 0) {
-    return (() => {
-      const toast = document.createElement("li");
-      toast.className = `toast1 warning`;
-      toast.innerHTML = `<div class="column">
-                         <i class="fa-solid fa-triangle-exclamation"></i>
-                         <span>No User's Available: Add User's</span>
-                      </div>
-                      <i class="fa-solid fa-xmark" onclick="removeToast(this.parentElement)"></i>`;
-      notifications.appendChild(toast);
-      toast.timeoutId = setTimeout(() => removeToast(toast), 5000);
-    })();
+    return showNotification("No User's Available: Add User's", "warning");
   }
 
   let targetId = prompt("Enter Target Id");
@@ -56,29 +60,9 @@ deleteUser.addEventListener("click", function () {
     emailData.innerText = "";
     eduData.innerText = "";
     digitData.innerText = "";
-    (() => {
-      const toast = document.createElement("li");
-      toast.className = `toast1 warning`;
-      toast.innerHTML = `<div class="column">
-                         <i class="fa-solid fa-triangle-exclamation"></i>
-                         <span>User: "${deletedName}" Deleted Successfully</span>
-                      </div>
-                      <i class="fa-solid fa-xmark" onclick="removeToast(this.parentElement)"></i>`;
-      notifications.appendChild(toast);
-      toast.timeoutId = setTimeout(() => removeToast(toast), 5000);
-    })();
+    showNotification(`User: "${deletedName}" Deleted Successfully`, "warning");
   } else {
-    (() => {
-      const toast = document.createElement("li");
-      toast.className = `toast1 error`;
-      toast.innerHTML = `<div class="column">
-                         <i class="fa-solid fa-circle-xmark"></i>
-                         <span>Please Enter Correct ID</span>
-                      </div>
-                      <i class="fa-solid fa-xmark" onclick="removeToast(this.parentElement)"></i>`;
-      notifications.appendChild(toast);
-      toast.timeoutId = setTimeout(() => removeToast(toast), 5000);
-    })();
+    showNotification("Please Enter Correct ID", "error");
   }
 });
 
@@ -91,29 +75,9 @@ generateBtn.addEventListener("click", function () {
   let givenData = JSON.parse(localStorage.getItem("data"));
 
   if (givenData.length < 1) {
-    (() => {
-      const toast = document.createElement("li");
-      toast.className = `toast1 error`;
-      toast.innerHTML = `<div class="column">
-                         <i class="fa-solid fa-circle-xmark"></i>
-                         <span>Nothing Available: Add Users.</span>
-                      </div>
-                      <i class="fa-solid fa-xmark" onclick="removeToast(this.parentElement)"></i>`;
-      notifications.appendChild(toast);
-      toast.timeoutId = setTimeout(() => removeToast(toast), 5000);
-    })();
+    showNotification("Nothing Available: Add Users.", "error");
   } else if (indexData.innerText.length > 0) {
-    (() => {
-      const toast = document.createElement("li");
-      toast.className = `toast1 info`;
-      toast.innerHTML = `<div class="column">
-                         <i class="fa-solid fa-circle-info"></i>
-                         <span>Attention:  Already Generated!!</span>
-                      </div>
-                      <i class="fa-solid fa-xmark" onclick="removeToast(this.parentElement)"></i>`;
-      notifications.appendChild(toast);
-      toast.timeoutId = setTimeout(() => removeToast(toast), 5000);
-    })();
+    showNotification("Attention:  Already Generated!!", "info");
   } else {
     //! Add data in form
     givenData.forEach((e, i) => {
@@ -146,8 +110,7 @@ generateBtn.addEventListener("click", function () {
 });
 
 // !Save Date from Inputs
-Save.addEventListener("click", function (e) {
-  // !Cheack if any input is empty or not
+Save.addEventListener("click", function () {
   let names = [];
   let emails = [];
   let digits = [];
@@ -157,13 +120,7 @@ Save.addEventListener("click", function (e) {
     emails.push(e.email);
     digits.push(e.digit);
   });
-  if (
-    userName.value == "" ||
-    age.value == "" ||
-    email.value == "" ||
-    education.value == "" ||
-    digit.value == ""
-  ) {
+  if (userName.value == "" || education.value == "") {
     alert("Please enter Full details");
   } else if (!email.value.includes("@gmail.com")) {
     alert("Please enter valid email address");
@@ -175,7 +132,7 @@ Save.addEventListener("click", function (e) {
     alert("UserName already exists");
   } else if (emails.includes(email.value)) {
     alert("UserEmail already exists");
-  } else if (age.value < 1) {
+  } else if (age.value < 1 || age.value > 100) {
     alert("UserAge must be between 1 and 100");
   } else if (digits.includes(digit.value)) {
     alert("Id already exists");
@@ -195,79 +152,35 @@ Save.addEventListener("click", function (e) {
     localStorage.setItem("data", JSON.stringify(array));
 
     let inputs = document.querySelectorAll("input");
-    inputs.forEach((e) => {
-      e.value = "";
-    });
+    inputs.forEach((e) => (e.value = ""));
 
-    // !clear Display Data
-    indexData.innerText = "";
-    nameData.innerText = "";
-    ageData.innerText = "";
-    emailData.innerText = "";
-    eduData.innerText = "";
-    digitData.innerText = "";
+    let h3 = document.querySelectorAll("h3");
+    h3.forEach((e) => (e.innerText = ""));
 
     //! Change inputs
-    buttonSection.classList.add("d-block");
-    buttonSection.classList.remove("d-none");
-    inputSection.classList.remove("d-block");
-    inputSection.classList.add("d-none");
+    buttonSection.classList.toggle("d-none");
+    inputSection.classList.toggle("d-none");
 
-    // Show Toast
-    (() => {
-      const toast = document.createElement("li");
-      toast.className = `toast1 success`;
-      toast.innerHTML = `<div class="column">
-                         <i class="fa-solid fa-circle-check"></i>
-                         <span>Congradulations: User Added</span>
-                      </div>
-                      <i class="fa-solid fa-xmark" onclick="removeToast(this.parentElement)"></i>`;
-      notifications.appendChild(toast);
-      toast.timeoutId = setTimeout(() => removeToast(toast), 5000);
-    })();
+    return showNotification("Congradulations: User Added", "success");
   }
 });
 
 // Login Logic
 login.addEventListener("click", function () {
-  login_input.classList.remove("d-none");
-  login_input.classList.add("d-block");
-  buttonSection.classList.add("d-none");
-  buttonSection.classList.remove("d-block");
+  let data = JSON.parse(localStorage.getItem("data"));
+  if (data.length === 0) {
+    return showNotification("No User's Available", "error");
+  }
+
+  login_input.classList.toggle("d-none");
+  buttonSection.classList.toggle("d-none");
 
   loginForm.addEventListener("click", function () {
-    let data = JSON.parse(localStorage.getItem("data"));
     let userLogin = loginUsername.value;
     let emailLogin = loginEmail.value;
 
-    if (data.length === 0) {
-      login_input.classList.remove("d-block");
-      login_input.classList.add("d-none");
-      buttonSection.classList.add("d-block");
-      buttonSection.classList.remove("d-none");
-      return (() => {
-        const toast = document.createElement("li");
-        toast.className = `toast1 error`;
-        toast.innerHTML = `<div class="column">
-                           <i class="fa-solid fa-circle-xmark"></i>
-                           <span>No User's Available</span>
-                        </div>
-                        <i class="fa-solid fa-xmark" onclick="removeToast(this.parentElement)"></i>`;
-        notifications.appendChild(toast);
-        toast.timeoutId = setTimeout(() => removeToast(toast), 5000);
-      })();
-    } else if (userLogin == "" || emailLogin == "") {
-      (() => {
-        const toast = document.createElement("li");
-        toast.className = `toast1 info`;
-        toast.innerHTML = `<div class="column">
-                           <i class="fa-solid fa-circle-info"></i>
-                           <span>Please Enter Full Details</span>
-                        </div>
-                        <i class="fa-solid fa-xmark" onclick="removeToast(this.parentElement)"></i>`;
-        notifications.appendChild(toast);
-        toast.timeoutId = setTimeout(() => removeToast(toast), 5000);
-      })();
+    if (userLogin == "" || emailLogin == "") {
+      return showNotification("Please Enter Full Details", "info");
     }
     let namesArr = [];
     let emailsArr = [];
@@ -280,39 +193,16 @@ login.addEventListener("click", function () {
       emailsArr.includes(emailLogin) &&
       namesArr.indexOf(userLogin) == emailsArr.indexOf(emailLogin)
     ) {
-      (() => {
-        const toast = document.createElement("li");
-        toast.className = `toast1 success`;
-        toast.innerHTML = `<div class="column">
-                           <i class="fa-solid fa-circle-check"></i>
-                           <span>User: ${userLogin} is Logged in</span>
-                        </div>
-                        <i class="fa-solid fa-xmark" onclick="removeToast(this.parentElement)"></i>`;
-        notifications.appendChild(toast);
-        toast.timeoutId = setTimeout(() => removeToast(toast), 5000);
-      })();
+      showNotification(`User: ${userLogin} is Logged in`, "success");
       loginUsername.value = "";
       loginEmail.value = "";
       ifLogin.innerText = `Welcome ${userLogin}`;
-      buttonSection.classList.add("d-block");
-      buttonSection.classList.remove("d-none");
-      login_input.classList.remove("d-block");
-      login_input.classList.add("d-none");
-      login.classList.add("d-none");
-      logout.classList.add("d-block");
-      logout.classList.remove("d-none");
+      buttonSection.classList.toggle("d-none");
+      login_input.classList.toggle("d-none");
+      logout.classList.toggle("d-none");
+      login.classList.toggle("d-none");
     } else {
-      return (() => {
-        const toast = document.createElement("li");
-        toast.className = `toast1 error`;
-        toast.innerHTML = `<div class="column">
-                           <i class="fa-solid fa-circle-xmark"></i>
-                           <span>Wrong Name & Email</span>
-                        </div>
-                        <i class="fa-solid fa-xmark" onclick="removeToast(this.parentElement)"></i>`;
-        notifications.appendChild(toast);
-        toast.timeoutId = setTimeout(() => removeToast(toast), 5000);
-      })();
+      return showNotification("Wrong Name & Email", "error");
     }
   });
 });
@@ -322,20 +212,8 @@ logout.addEventListener("click", function () {
   let confirmfromUser = confirm("Are you sure you want to logOut?");
   if (confirmfromUser) {
     ifLogin.innerText = "";
-    login.classList.add("d-block");
-    login.classList.remove("d-none");
-    logout.classList.add("d-none");
-    logout.classList.remove("d-block");
-    (() => {
-      const toast = document.createElement("li");
-      toast.className = `toast1 warning`;
-      toast.innerHTML = `<div class="column">
-                         <i class="fa-solid fa-triangle-exclamation"></i>
-                         <span>You Have been Logged out</span>
-                      </div>
-                      <i class="fa-solid fa-xmark" onclick="removeToast(this.parentElement)"></i>`;
-      notifications.appendChild(toast);
-      toast.timeoutId = setTimeout(() => removeToast(toast), 5000);
-    })();
+    login.classList.toggle("d-none");
+    logout.classList.toggle("d-none");
+    return showNotification("You Have been Logged out", "warning");
   }
 });
