@@ -22,8 +22,8 @@
 
 4. **_Login Button:_**
 
-   > -after clicking login button it show 2 inputs name & Email if no user available it show notification there is no user add some user’s or you skip one input or you enter wrong Name & Email.
-   > Else➡️ it show notification with name of user who logged in and show Welcome and name of logged in user in navbar and replace login button into logout.
+> -after clicking login button it show 2 inputs name & Email if no user available it show notification there is no user add some user’s or you skip one input or you enter wrong Name & Email.
+> Else➡️ it show notification with name of user who logged in and show Welcome and name of logged in user in navbar and replace login button into logout.
 
 5. **_Login Button:_**
    > -after clicking logout button you see A confirmation popup yes or no if➡️ you click no nothing else change elseIf➡️ you click yes it show notification you have been logged out and change logout button to login.
