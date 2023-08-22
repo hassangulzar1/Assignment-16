@@ -26,4 +26,5 @@
 >   Else➡️ it show notification with name of user who logged in and show Welcome and name of logged in user in navbar and replace login button into logout.
 
 5. **_Login Button:_**
-   > - after clicking logout button you see A confirmation popup yes or no if➡️ you click no nothing else change elseIf➡️ you click yes it show notification you have been logged out and change logout button to login.
+
+> - after clicking logout button you see A confirmation popup yes or no if➡️ you click no nothing else change elseIf➡️ you click yes it show notification you have been logged out and change logout button to login.
